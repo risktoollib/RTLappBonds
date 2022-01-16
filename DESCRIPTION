@@ -5,9 +5,23 @@ Authors@R: person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre
 Description: Demonstrated fixed income risk at the portfolio level.
 License: MIT + file LICENSE
 Imports: 
+    attempt,
     config (>= 0.3.1),
+    dplyr,
+    DT,
+    glue,
     golem (>= 0.3.1),
-    shiny (>= 1.7.1)
+    htmltools,
+    processx,
+    RTL,
+    shiny (>= 1.7.1),
+    thinkr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Suggests: 
+    covr,
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US
