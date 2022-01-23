@@ -6,6 +6,7 @@ Description: Demonstrated fixed income risk at the portfolio level.
 License: MIT + file LICENSE
 Imports: 
     attempt,
+    bslib,
     config (>= 0.3.1),
     dplyr,
     DT,

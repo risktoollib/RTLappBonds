@@ -3,14 +3,39 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @importFrom bslib bs_theme font_google
+
 #' @noRd
 app_ui <- function(request) {
-  tagList(
+  shiny::fluidPage(
+    # if you want to use bootstrap 5 styling
+    theme = bslib::bs_theme(version = 5,
+                            bg = "#333333", # 626C70
+                            fg = "White",
+                            primary = "Cyan",
+                            heading_font = bslib::font_google("Prompt"),
+                            base_font = bslib::font_google("Prompt"),
+                            code_font = bslib::font_google("JetBrains Mono"),
+                            "progress-bar-bg" = "lime"),
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic 
-    fluidPage(
-      h1("RTLappBonds")
+    #<img src="https://i.imgur.com/XqpQZwi.png" width=300 />
+    # UI logic
+    titlePanel("IR Portfolio Risk"),
+    tags$h5(
+      tags$span(style = "color:White;;font-size:0.8em;font-style:italic", "created by pcote@ualberta.ca"),
+      tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))
+    ),
+    mod_instruments_ui("instruments_ui_1"),
+    tags$h5(tags$span(style = "color:cyan;font-size:0.7em", "units are $/bbl for oil & products, $/mmBtu for NG.")),
+    shiny::tabsetPanel(
+      type = "tabs"#,
+      # shiny::tabPanel("Forward Curve", mod_CurveDynamics_ui("CurveDynamics_ui_1")),
+      # shiny::tabPanel("Seasonality", mod_Seasonality_ui("Seasonality_ui_1")),
+      # shiny::tabPanel("Volatility and Correlation", mod_VolCor_ui("VolCor_ui_1")),
+      # shiny::tabPanel("Betas", mod_Betas_ui("Betas_ui_1")),
+      # shiny::tabPanel("Spread Dynamics",
+      #                 mod_SpreadDynamics_ui("SpreadDynamics_ui_1"))
     )
   )
 }
