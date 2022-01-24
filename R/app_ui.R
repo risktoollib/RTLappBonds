@@ -27,7 +27,6 @@ app_ui <- function(request) {
       tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))
     ),
     mod_instruments_ui("instruments_ui_1"),
-    tags$h5(tags$span(style = "color:cyan;font-size:0.7em", "units are $/bbl for oil & products, $/mmBtu for NG.")),
     shiny::tabsetPanel(
       type = "tabs"#,
       # shiny::tabPanel("Forward Curve", mod_CurveDynamics_ui("CurveDynamics_ui_1")),

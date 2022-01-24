@@ -1,6 +1,6 @@
 Package: RTLappBonds
 Title: PKG_TITLE
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre', 'aut'))
 Description: Demonstrated fixed income risk at the portfolio level.
 License: MIT + file LICENSE
@@ -13,13 +13,17 @@ Imports:
     glue,
     golem (>= 0.3.1),
     htmltools,
+    magrittr,
+    plotly,
     processx,
+    purrr,
     RTL,
+    shinipsum,
     shiny (>= 1.7.1),
     thinkr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     covr,
     spelling,
