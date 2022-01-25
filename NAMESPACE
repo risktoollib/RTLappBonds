@@ -2,7 +2,6 @@
 
 export("%>%")
 export(run_app)
-import(DT)
 import(shiny)
 importFrom(bslib,bs_theme)
 importFrom(bslib,font_google)
