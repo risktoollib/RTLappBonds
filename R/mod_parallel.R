@@ -24,9 +24,9 @@ mod_parallel_server <- function(id, r){
     
     output$mtm <- shiny::renderTable({
       #shinipsum::random_DT(10, 10, "numeric")
-      iris
+      #iris
       #browser()
-      #r$data
+      r$data
     })
  
   })
