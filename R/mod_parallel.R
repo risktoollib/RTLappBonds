@@ -2,7 +2,7 @@
 #'
 #' @description A shiny Module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id,input,output,session,  Internal parameters for {shiny}.
 #'
 #' @noRd 
 #'
@@ -17,15 +17,16 @@ mod_parallel_ui <- function(id){
 #' parallel Server Functions
 #'
 #' @noRd 
-mod_parallel_server <- function(id, r = port){
+mod_parallel_server <- function(id, r){
   moduleServer( id, function(input, output, session){
+    
     ns <- session$ns
     
     output$mtm <- shiny::renderTable({
       #shinipsum::random_DT(10, 10, "numeric")
-      #iris
+      iris
       #browser()
-      port
+      #r$data
     })
  
   })
