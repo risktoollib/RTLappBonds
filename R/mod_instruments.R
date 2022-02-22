@@ -7,17 +7,16 @@
 mod_instruments_ui <- function(id){
   ns <- NS(id)
   tagList(
-    DT::DTOutput(ns("portfolio")),
-    actionButton("go",label = "price Portofolio"),
+    DT::DTOutput(ns("portfolio"))
   )
 }
     
 #' instruments Server Functions
 #'
 #' @noRd 
-mod_instruments_server <- function(id){
+mod_instruments_server <- function(id, r = port){
   moduleServer( id, function(input, output, session){
-    ns <- session$ns
+   # ns <- session$ns
     
     Notional <- Maturity <- Coupon <- YTM <- NULL 
 
@@ -30,27 +29,27 @@ mod_instruments_server <- function(id){
       )
     })
     
-    output$portfolio <- DT::renderDT({
-      #shinipsum::random_DT(10, 10, "numeric")
-      DT::datatable(port$data, editable = TRUE,options = list(dom = 't'))
-    })
-    
     #when there is any edit to a cell, write that edit to the initial dataframe
     #check to make sure it's positive, if not convert
-    observeEvent(input$portfolio_cell_edit, {
+    shiny::observeEvent(input$portfolio_cell_edit, {
       #get values
       info = input$portfolio_cell_edit
       i = as.numeric(info$row)
       j = as.numeric(info$col)
       k = as.numeric(info$value)
-      if(k < 0){ #convert to positive if negative
+      if (k < 0) {
+        #convert to positive if negative
         k <- k * -1
       }
       
       #write values to reactive
       port$data[i,j] <- k
     })
- 
+
+    output$portfolio <- DT::renderDT({
+      DT::datatable(port$data, editable = TRUE, options = list(dom = 't'))
+    })
+    
   })
 }
     

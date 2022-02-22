@@ -10,16 +10,23 @@
 mod_parallel_ui <- function(id){
   ns <- NS(id)
   tagList(
- 
+    shiny::tableOutput(ns("mtm"))
   )
 }
     
 #' parallel Server Functions
 #'
 #' @noRd 
-mod_parallel_server <- function(id){
+mod_parallel_server <- function(id, r = port){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    output$mtm <- shiny::renderTable({
+      #shinipsum::random_DT(10, 10, "numeric")
+      #iris
+      #browser()
+      port
+    })
  
   })
 }
