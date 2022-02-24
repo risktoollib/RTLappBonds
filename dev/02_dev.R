@@ -26,6 +26,8 @@ usethis::use_package("DT")
 usethis::use_package("bslib")
 usethis::use_package("shinipsum")
 usethis::use_package("purrr")
+usethis::use_package("scales")
+
 
 ## Add modules ----
 ## Create a module infrastructure in R/

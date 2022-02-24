@@ -26,7 +26,7 @@ mod_parallel_server <- function(id, r){
       #shinipsum::random_DT(10, 10, "numeric")
       #iris
       #browser()
-      r$datLong[1:5,]
+      r$port
     })
  
   })
