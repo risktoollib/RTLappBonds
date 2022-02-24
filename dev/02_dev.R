@@ -18,12 +18,13 @@
 attachment::att_from_rscripts()
 usethis::use_package("thinkr")
 usethis::use_package("dplyr")
+usethis::use_package("tidyr")
+usethis::use_package("plotly")
 usethis::use_pipe()
 usethis::use_package("RTL")
 usethis::use_package("DT")
 usethis::use_package("bslib")
 usethis::use_package("shinipsum")
-usethis::use_package("plotly")
 usethis::use_package("purrr")
 
 ## Add modules ----
