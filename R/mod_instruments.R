@@ -17,10 +17,12 @@ mod_instruments_ui <- function(id){
   # cc <- sort(unique(gsub(pattern = "[0-9]+",replacement = "",x = RTL::dflong$series))[1:6])
   # cc <- cc[!cc %in% c("BRN","WCW")]
   tagList(
-    #shiny::radioButtons(ns("port"),"Select port",choices = cc, selected = "CL", inline = TRUE)#,
-    DT::dataTableOutput(ns("port")),
     tags$br(),
     shiny::textOutput(ns("portMTM")),
+    tags$br(),
+    DT::dataTableOutput(ns("port")),
+    tags$br(),
+    shiny::radioButtons("stepSize","Step Size in basis points:",choices = c("1","5","10","25","50"),selected = "1", inline = TRUE),
     tags$br(),
   )
 }
