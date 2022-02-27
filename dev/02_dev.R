@@ -38,7 +38,7 @@ golem::add_module( name = "nonparallel" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct( "helpers" ) 
+golem::add_fct("portfolioMTM") 
 golem::add_utils( "helpers" )
 
 ## External resources
