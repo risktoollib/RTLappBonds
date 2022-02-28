@@ -6,9 +6,9 @@
 #' @param shockInd individual shocks to ytm
 #' @param output mtm of potfolio or individual bonds
 #' @return portfolio mark-to-market
-#' @export portfolioMTM
+#' @export 
 #' @author Philippe Cote
-#' @noRd
+
 
 portfolioMTM <- function(x, shockpar = 0, shockInd = FALSE, output = "p") {
   if (output == "b1") {
