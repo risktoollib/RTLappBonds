@@ -18,6 +18,7 @@
 attachment::att_from_rscripts()
 usethis::use_package("thinkr")
 usethis::use_package("dplyr")
+usethis::use_package("purrr")
 usethis::use_package("tidyr")
 usethis::use_package("plotly")
 usethis::use_pipe()

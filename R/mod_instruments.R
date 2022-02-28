@@ -21,9 +21,7 @@ mod_instruments_ui <- function(id){
     shiny::textOutput(ns("portMTM")),
     tags$br(),
     DT::dataTableOutput(ns("port")),
-    tags$br(),
-    shiny::radioButtons("stepSize","Step Size in basis points:",choices = c("1","5","10","25","50"),selected = "1", inline = TRUE),
-    tags$br(),
+    tags$br()
   )
 }
     
@@ -40,12 +38,18 @@ mod_instruments_server <- function(id, r) {
                    Notional = c(-1e6, 2e6, -1e6),
                    Maturity = c(2, 10, 30),
                    Coupon = c(.05, .03, 0.01),
-                   YTM = Coupon)
+                   YTM = Coupon,
+                   Shock = c(100,50,50))
+                 
+                 # shiny::observeEvent(input$stepSize, {
+                 #   r$stepsize <- as.numeric(input$stepSize) / 10000
+                 # })
                  
                  proxy <- DT::dataTableProxy('port')
                  
                  shiny::observeEvent(input$port_cell_edit, {
                    r$port <- DT::editData(r$port, input$port_cell_edit)
+                   
                    r$portMTM <- r$port %>% 
                      dplyr::mutate(MTM = round(mapply(RTL::bond,YTM,Coupon,Maturity)/100*Notional,0)) 
                    })
