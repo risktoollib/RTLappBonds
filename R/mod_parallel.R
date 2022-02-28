@@ -9,13 +9,14 @@
 #' @importFrom shiny NS tagList 
 #' @importFrom plotly plot_ly add_trace layout
 #' @import dplyr
-mod_parallel_ui <- function(id){
+mod_parallel_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    shiny::radioButtons(ns("stepSize"),"Step Size in basis points:",choices = c("1","5","10","25","50"),selected = "5", inline = TRUE),
-    #shiny::numericInput(ns("ss"),"Step Size in basis points:",value = 1,min = 1,max = 50,step = 5),
-    tags$br(),
-   plotly::plotlyOutput(ns("chartParallel"),height = "800px")
+    #tags$br(),
+    tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Observe the change in Delta (Gamma) move away from current YTM.")),
+    plotly::plotlyOutput(ns("chartParallel"), height = "400px"),
+    tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Observe the changes in estimates by changing the step size.")),
+    shiny::radioButtons(ns("stepSize"), "Step size in basis points:", choices = c("1", "5", "10", "25", "50"), selected = "5", inline = TRUE),
   )
 }
     
@@ -74,7 +75,7 @@ mod_parallel_server <- function(id, r){
         plotly::add_trace(y = ~DeltaPL, name = 'Delta PL', mode = 'lines') %>%
         plotly::add_trace(y = ~GammaPL, name = 'Gamma PL', mode = 'lines') %>%
         plotly::add_trace(y = ~UnexplainedPL, name = 'Unexplained PL', mode = 'lines') %>%
-        plotly::layout(title = list(text = "Portfolio Value", x = 0),
+        plotly::layout(title = list(text = "PL Decomposition", x = 0.05),
                        xaxis = list(title = "Changes in YTM from Current Levels",separators = '.,',tickformat = ".2%"),
                        yaxis = list(title = "$",separators = '.,',tickformat = ",$"),
                        legend = list(x = 0.7, y = 0.5))

@@ -27,15 +27,10 @@ app_ui <- function(request) {
       tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))
     ),
     mod_instruments_ui("instruments_ui_1"),
-    mod_parallel_ui("parallel_ui_1"),
     shiny::tabsetPanel(
-      type = "tabs"#,
-      # shiny::tabPanel("Forward Curve", mod_CurveDynamics_ui("CurveDynamics_ui_1")),
-      # shiny::tabPanel("Seasonality", mod_Seasonality_ui("Seasonality_ui_1")),
-      # shiny::tabPanel("Volatility and Correlation", mod_VolCor_ui("VolCor_ui_1")),
-      # shiny::tabPanel("Betas", mod_Betas_ui("Betas_ui_1")),
-      # shiny::tabPanel("Spread Dynamics",
-      #                 mod_SpreadDynamics_ui("SpreadDynamics_ui_1"))
+      type = "tabs",
+      shiny::tabPanel("Parallel Shifts in YTM", mod_parallel_ui("parallel_ui_1"))
+      #shiny::tabPanel("Non-Parallel Shifts in YTM", mod_nonparallel_server("nonparallel_ui_1"))
     )
   )
 }

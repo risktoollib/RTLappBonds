@@ -13,16 +13,15 @@
 
 mod_instruments_ui <- function(id){
   ns <- NS(id)
-  
-  # cc <- sort(unique(gsub(pattern = "[0-9]+",replacement = "",x = RTL::dflong$series))[1:6])
-  # cc <- cc[!cc %in% c("BRN","WCW")]
-  tagList(
+
+    tagList(
     tags$br(),
     shiny::textOutput(ns("portMTM")),
     tags$br(),
     DT::dataTableOutput(ns("port")),
     tags$br()
   )
+    
 }
     
 #' instruments Server Functions
@@ -35,9 +34,9 @@ mod_instruments_server <- function(id, r) {
                  Notional <- Maturity <- Coupon <- YTM <- portMTM <- x <- NULL
                  
                  r$port <-  dplyr::tibble(
-                   Notional = c(-1e6, 2e6, -1e6),
-                   Maturity = c(2, 10, 30),
-                   Coupon = c(.05, .03, 0.01),
+                   Notional = c(1e6, -500000, -500000),
+                   Maturity = c(10, 2, 30),
+                   Coupon = c(.03, .03, 0.03),
                    YTM = Coupon,
                    Shock = c(100,50,50))
                  

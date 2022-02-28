@@ -17,7 +17,7 @@ mod_nonparallel_ui <- function(id){
 #' nonparallel Server Functions
 #'
 #' @noRd 
-mod_nonparallel_server <- function(id){
+mod_nonparallel_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
