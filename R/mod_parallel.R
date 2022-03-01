@@ -13,10 +13,14 @@ mod_parallel_ui <- function(id) {
   ns <- NS(id)
   tagList(
     #tags$br(),
-    tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Observe the change in Delta (Gamma) move away from current YTM.")),
-    plotly::plotlyOutput(ns("chartParallel"), height = "400px"),
-    tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Observe the changes in estimates by changing the step size.")),
+    tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Understanding the change in Delta (Gamma) as the YTMs changes")),
+    tags$ul(
+      tags$li("Create a portfolios with a risk profile in mind."),
+      tags$li("Do results confirm your thinking?")
+    ),
+    tags$br(),
     shiny::radioButtons(ns("stepSize"), "Step size in basis points:", choices = c("1", "5", "10", "25", "50"), selected = "5", inline = TRUE),
+    plotly::plotlyOutput(ns("chartParallel"), height = "600px"),
   )
 }
     

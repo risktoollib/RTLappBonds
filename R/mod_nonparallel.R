@@ -11,6 +11,7 @@ mod_nonparallel_ui <- function(id){
   ns <- NS(id)
   tagList(
     tags$h5(tags$span(style = "color:lime;font-style: italic;font-size:1.0em", "Amend the Shock column for non-parallel changes in YTM (bps)")),
+    tags$h5(tags$span(style = "color:cyan;font-size:0.7em", "Uses a step size of 1 basis point.")),
     shiny::dataTableOutput(ns("nonParallel"))
   )
 }

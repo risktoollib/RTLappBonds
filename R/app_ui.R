@@ -21,12 +21,18 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     #<img src="https://i.imgur.com/XqpQZwi.png" width=300 />
     # UI logic
-    titlePanel("Understanding IR Risk at Portfolio Level"),
-    tags$h5(
-      tags$span(style = "color:White;;font-size:0.8em;font-style:italic", "created by pcote@ualberta.ca"),
-      tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))
-    ),
-    mod_instruments_ui("instruments_ui_1"),
+    shiny::fluidRow(shiny::column(8, titlePanel("Understanding IR Risk at Portfolio Level")),
+                    shiny::column(4, align = "right",tags$h5(
+                      tags$span(style = "color:White;;font-size:0.8em;font-style:italic", "created by pcote@ualberta.ca"),
+                      tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))
+                    ))), 
+
+    tags$ul(
+      tags$li(tags$span(style = "color:lime;font-size:1.0em", "Create your own portfolio by modifying its bond positions.")),
+      tags$li(tags$span(style = "color:lime;font-size:1.0em", "The central difference method is used for numerical sensitivites."))
+      ),
+
+        mod_instruments_ui("instruments_ui_1"),
     shiny::tabsetPanel(
       type = "tabs",
       shiny::tabPanel("Parallel Shifts in YTM", mod_parallel_ui("parallel_ui_1")),
