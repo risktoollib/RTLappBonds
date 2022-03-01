@@ -29,8 +29,8 @@ app_ui <- function(request) {
     mod_instruments_ui("instruments_ui_1"),
     shiny::tabsetPanel(
       type = "tabs",
-      shiny::tabPanel("Parallel Shifts in YTM", mod_parallel_ui("parallel_ui_1"))
-      #shiny::tabPanel("Non-Parallel Shifts in YTM", mod_nonparallel_server("nonparallel_ui_1"))
+      shiny::tabPanel("Parallel Shifts in YTM", mod_parallel_ui("parallel_ui_1")),
+      shiny::tabPanel("Non-Parallel Shifts in YTM", mod_nonparallel_ui("nonparallel_ui_1"))
     )
   )
 }

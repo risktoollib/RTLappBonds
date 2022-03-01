@@ -26,7 +26,7 @@ mod_parallel_ui <- function(id) {
 mod_parallel_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     
-    ns <- NS(id)
+    ns <- session$ns
     
     port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- NULL
     
@@ -47,7 +47,7 @@ mod_parallel_server <- function(id, r){
                       PriceMinus = purrr::pmap(.l = list(x = x$data, shockpar = Yield - StepSize()), .f = portfolioMTM),
                       PricePlus = purrr::pmap(.l = list(x = x$data, shockpar = Yield + StepSize()), .f = portfolioMTM)
                       ) %>%
-        plyr::mutate(Price = purrr::map_dbl(Price, .f = as.numeric),
+        dplyr::mutate(Price = purrr::map_dbl(Price, .f = as.numeric),
                      PriceMinus = purrr::map_dbl(PriceMinus, .f = as.numeric),
                      PricePlus = purrr::map_dbl(PricePlus, .f = as.numeric),
                      Delta = (PricePlus - PriceMinus) / (2 * StepSize()) / 10000,
@@ -69,12 +69,12 @@ mod_parallel_server <- function(id, r){
         )
 
       sens %>%
-        plotly::plot_ly(x = ~Yield, y = ~ActualPL, name = "Actual PL", type = 'scatter', mode = 'lines') %>%
+        plotly::plot_ly(x = ~Yield, y = ~ActualPL, name = "Actual PL", type = 'scatter', mode = 'lines', line = list(dash = "solid")) %>%
         #plotly::plot_ly(x = ~Yield, y = ~Price, name = "Portfolio Value", type = 'scatter', mode = 'lines') %>%
         #plotly::add_trace(y = ~ActualPL, name = 'Actual PL', mode = 'lines') %>%
-        plotly::add_trace(y = ~DeltaPL, name = 'Delta PL', mode = 'lines') %>%
-        plotly::add_trace(y = ~GammaPL, name = 'Gamma PL', mode = 'lines') %>%
-        plotly::add_trace(y = ~UnexplainedPL, name = 'Unexplained PL', mode = 'lines') %>%
+        plotly::add_trace(y = ~DeltaPL, name = 'Delta PL', mode = 'lines', line = list(dash = "dot")) %>%
+        plotly::add_trace(y = ~GammaPL, name = 'Gamma PL', mode = 'lines', line = list(dash = "dot")) %>%
+        plotly::add_trace(y = ~UnexplainedPL, name = 'Unexplained PL', mode = 'lines', line = list(dash = "dashdot")) %>%
         plotly::layout(title = list(text = "PL Decomposition", x = 0.05),
                        xaxis = list(title = "Changes in YTM from Current Levels",separators = '.,',tickformat = ".2%"),
                        yaxis = list(title = "$",separators = '.,',tickformat = ",$"),
