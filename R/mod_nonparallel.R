@@ -61,7 +61,8 @@ mod_nonparallel_server <- function(id, r){
       #browser()
       round(rbind(plAttrib(pos = 1),plAttrib(pos = 2),plAttrib(pos = 3)),4)
       
-    })
+    }, options = list(dom = 't')
+    )
  
   })
 }
