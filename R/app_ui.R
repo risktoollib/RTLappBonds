@@ -21,7 +21,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     #<img src="https://i.imgur.com/XqpQZwi.png" width=300 />
     # UI logic
-    titlePanel("IR Portfolio Risk"),
+    titlePanel("Understanding IR Risk at Portfolio Level"),
     tags$h5(
       tags$span(style = "color:White;;font-size:0.8em;font-style:italic", "created by pcote@ualberta.ca"),
       tags$a(href = "https://www.linkedin.com/in/philippe-cote-88b1769/", icon("linkedin", "My Profile", target = "_blank"))

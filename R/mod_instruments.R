@@ -65,7 +65,7 @@ mod_instruments_server <- function(id, r) {
                    x <- r$port %>% 
                      dplyr::mutate(MTM = round(mapply(RTL::bond,YTM,Coupon,Maturity)/100*Notional,0))
                    x <- round(sum(x$MTM))
-                   paste("The portfolio MTM value is:",scales::dollar(x),".")
+                   paste("The initial portfolio MTM value is:",scales::dollar(x),".")
                    }
                  )
                })
