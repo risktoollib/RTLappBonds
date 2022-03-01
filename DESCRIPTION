@@ -1,7 +1,7 @@
 Package: RTLappBonds
-Title: PKG_TITLE
+Title: Bond risk at portfolio level
 Version: 0.0.1
-Date: "2022-02-27"
+Date: "2022-02-28"
 Authors@R: person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre', 'aut'))
 Description: Demonstrated fixed income risk at the portfolio level.
 License: MIT + file LICENSE

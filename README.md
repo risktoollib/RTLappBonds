@@ -27,7 +27,7 @@ knowledge required to operate at Enterprise level.
 
 ## Installation
 
-You can install the development version of RTLappBonds from
+You can install the development version of `RTLappBonds` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -37,9 +37,7 @@ devtools::install_github("risktoollib/RTLappBonds")
 
 ## Running the app
 
-This is a basic example which shows you how to solve a common problem:
-
 ``` r
 library(RTLappBonds)
-## basic example code
+RTLappBonds::run_app()
 ```
