@@ -29,6 +29,7 @@ app_ui <- function(request) {
 
     tags$ul(
       tags$li(tags$span(style = "color:lime;font-size:1.0em", "Create your own portfolio by modifying its bond positions.")),
+      tags$li(tags$span(style = "color:lime;font-size:1.0em", "Initial Yield-To-Maturities are the latest Constant Maturity US Treasury yields from FRED.")),
       tags$li(tags$span(style = "color:lime;font-size:1.0em", "The central difference method is used for numerical sensitivites."))
       ),
 
