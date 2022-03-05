@@ -28,6 +28,7 @@ usethis::use_package("bslib")
 usethis::use_package("shinipsum")
 usethis::use_package("purrr")
 usethis::use_package("scales")
+usethis::use_package("tidyquant")
 
 
 ## Add modules ----

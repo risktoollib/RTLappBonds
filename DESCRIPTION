@@ -23,6 +23,7 @@ Imports:
     shinipsum,
     shiny (>= 1.7.1),
     thinkr,
+    tidyquant,
     tidyr
 Encoding: UTF-8
 LazyData: true

@@ -31,14 +31,17 @@ mod_instruments_server <- function(id, r) {
   moduleServer(id,
                function(input, output, session) {
                  
-                 Notional <- Maturity <- Coupon <- YTM <- portMTM <- x <- NULL
+                 Notional <- Maturity <- Coupon <- YTM <- portMTM <- x <- cmt <- NULL
+                 cmt <- tidyquant::tq_get(c("DGS2","DGS10","DGS30"), get = "economic.data") %>% 
+                   dplyr::filter(date == dplyr::last(date))
+                 coupons <- round(cmt$price / 0.25) * .25 / 100
                  
                  r$port <-  dplyr::tibble(
-                   Notional = c(1e6, -500000, -500000),
-                   Maturity = c(10, 2, 30),
-                   Coupon = c(.03, .03, 0.03),
-                   YTM = Coupon,
-                   Shock = c(100,50,50))
+                   Notional = c(500000, 500000, -1e6),
+                   Maturity = c(2, 10, 30),
+                   Coupon = c(coupons[1],coupons[2],coupons[3]),
+                   YTM = c(cmt$price[1]/100, cmt$price[2]/100, cmt$price[3]/100),
+                   Shock = c(50,20,20))
                  
                  # shiny::observeEvent(input$stepSize, {
                  #   r$stepsize <- as.numeric(input$stepSize) / 10000
