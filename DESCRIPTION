@@ -1,9 +1,11 @@
 Package: RTLappBonds
 Title: Bond risk at portfolio level
 Version: 0.0.1
-Date: "2022-02-28"
-Authors@R: person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre', 'aut'))
-Description: Experiemtn and develop Demonstrated fixed income risk at the portfolio level.
+Date: "2022-03-06"
+Authors@R: 
+    person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre', 'aut'))
+Description: Develop your understanding of fixed income risk
+    through active experimentation.
 License: MIT + file LICENSE
 Imports: 
     attempt,
@@ -34,3 +36,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
+URL: https://github.com/risktoollib/RTLappBonds
+BugReports: https://github.com/risktoollib/RTLappBonds/issues
