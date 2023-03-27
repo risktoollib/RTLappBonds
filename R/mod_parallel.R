@@ -32,15 +32,13 @@ mod_parallel_server <- function(id, r){
     
     ns <- session$ns
     
-    port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- NULL
+    port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- PriceLocal <- DeltaLocal <- GammaLocal <- NULL
     
     output$chartParallel <- plotly::renderPlotly({
       pp <- r$port
       s = 0 # initial ytm
 
       StepSize <- shiny::reactive(as.numeric(input$stepSize) / 10000)
-      
-      browser()
       
       # junk <-
       #   dplyr::tibble(
@@ -102,7 +100,8 @@ mod_parallel_server <- function(id, r){
           sens <- rbind(sens,x)
         }
       }
-        
+      browser()
+      
       Rcpp::sourceCpp("./src/rcppPortParallel.cpp")
       sens <- rcppPortParallel(x = base::as.matrix(sens), stepSize = StepSize()) %>% 
         dplyr::as_tibble() 

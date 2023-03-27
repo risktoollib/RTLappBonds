@@ -2,6 +2,10 @@
 #include <vector>
 using namespace Rcpp;
 
+//' Bond sensitivities
+//' 
+//' @param x bond details as matrix
+//' @param stepSize sensitivities stepsize
 // [[Rcpp::export]]
 NumericVector rcppPortParallel(NumericMatrix x, double stepSize) {
 
