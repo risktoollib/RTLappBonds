@@ -11,6 +11,9 @@ rcppPortParallel(x, stepSize)
 
 \item{stepSize}{sensitivities stepsize}
 }
+\value{
+matrix of sensitivities
+}
 \description{
 Bond sensitivities
 }

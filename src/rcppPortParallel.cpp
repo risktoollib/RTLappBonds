@@ -6,7 +6,9 @@ using namespace Rcpp;
 //' 
 //' @param x bond details as matrix
 //' @param stepSize sensitivities stepsize
-// [[Rcpp::export]]
+//' @return matrix of sensitivities
+//' @export
+// [[Rcpp::export("rcppPortParallel")]]
 NumericVector rcppPortParallel(NumericMatrix x, double stepSize) {
 
   for (int i = 0; i < x.nrow(); i++) {
@@ -53,7 +55,7 @@ NumericVector rcppPortParallel(NumericMatrix x, double stepSize) {
     // delta
     x(i,10) = (pv01Up - pv01Down) / 2;
     // gamma
-    x(i,11) = 0.5 * ((pv01Up - 2 * pv + pv01Down) / (stepSize * stepSize)) / (10000 * 10000);
+    x(i,11) = 0.5 * ((pv01Up - 2 * pv + pv01Down) / (stepSize * stepSize));
   }
 
 return x;

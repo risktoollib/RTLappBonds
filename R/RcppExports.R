@@ -5,7 +5,9 @@
 #' 
 #' @param x bond details as matrix
 #' @param stepSize sensitivities stepsize
+#' @return matrix of sensitivities
+#' @export
 rcppPortParallel <- function(x, stepSize) {
-    .Call('_RTLappBonds_rcppPortParallel', PACKAGE = 'RTLappBonds', x, stepSize)
+    .Call(`_RTLappBonds_rcppPortParallel`, x, stepSize)
 }
 

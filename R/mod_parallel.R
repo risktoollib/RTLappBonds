@@ -100,9 +100,8 @@ mod_parallel_server <- function(id, r){
           sens <- rbind(sens,x)
         }
       }
-      browser()
       
-      Rcpp::sourceCpp("./src/rcppPortParallel.cpp")
+      #Rcpp::sourceCpp("./src/rcppPortParallel.cpp")
       sens <- rcppPortParallel(x = base::as.matrix(sens), stepSize = StepSize()) %>% 
         dplyr::as_tibble() 
       
@@ -131,21 +130,19 @@ mod_parallel_server <- function(id, r){
           DeltaApprox = PriceLocal + DeltaLocal * (Yield / StepSize()),
           ActualPL = Price - PriceLocal,
           DeltaPL = DeltaLocal * (Yield / StepSize()),
-          GammaPL = GammaLocal * ((Yield / StepSize())) ^ 2,
+          GammaPL = GammaLocal * (Yield)^2,
           DeltaGammaPL = DeltaPL + GammaPL,
           UnexplainedPL = Price - (PriceLocal + DeltaPL + GammaPL)
         )
       
       sens %>% 
-        dplyr::select(-1:-5) %>% 
         dplyr::group_by(Yield) %>% 
-        dplyr::summarise_all(.funs = list(sum))
-      
-        
-      sens %>%
+        dplyr::summarise(Yield = max(Yield),
+                         ActualPL = sum(ActualPL * Notional/100),
+                         DeltaPL = sum(DeltaPL * Notional/100),
+                         GammaPL = sum(GammaPL * Notional/100),
+                         UnexplainedPL = sum(UnexplainedPL * Notional/100)) %>%
         plotly::plot_ly(x = ~Yield, y = ~ActualPL, name = "Actual PL", type = 'scatter', mode = 'lines', line = list(dash = "solid")) %>%
-        #plotly::plot_ly(x = ~Yield, y = ~Price, name = "Portfolio Value", type = 'scatter', mode = 'lines') %>%
-        #plotly::add_trace(y = ~ActualPL, name = 'Actual PL', mode = 'lines') %>%
         plotly::add_trace(y = ~DeltaPL, name = 'Delta PL', mode = 'lines', line = list(dash = "dot")) %>%
         plotly::add_trace(y = ~GammaPL, name = 'Gamma PL', mode = 'lines', line = list(dash = "dot")) %>%
         plotly::add_trace(y = ~UnexplainedPL, name = 'Unexplained PL', mode = 'lines', line = list(dash = "dashdot")) %>%
