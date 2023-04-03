@@ -33,8 +33,7 @@ mod_instruments_server <- function(id, r) {
                function(input, output, session) {
                  
                  Notional <- Maturity <- Coupon <- YTM <- portMTM <- x <- cmt <- NULL
-                 
-                 r$stepSize <- shiny::reactive(as.numeric(input$stepSize) / 10000)
+                 port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- PriceLocal <- DeltaLocal <- GammaLocal <- ActualPL <- Notional <- UnexplainedPL <- NULL
                  
                  cmt <- tidyquant::tq_get(c("DGS2","DGS10","DGS30"), get = "economic.data") %>% 
                    dplyr::filter(date == dplyr::last(date))
@@ -74,6 +73,72 @@ mod_instruments_server <- function(id, r) {
                    x <- round(sum(x$MTM))
                    paste("The initial portfolio MTM value is:",scales::dollar(x),".")
                    }
+                 )
+
+                # sensitivities cpp -------------------------------------------------------
+                 shiny::observeEvent(c(input$stepSize, input$port), {
+                   r$stepSize <- as.numeric(input$stepSize) / 10000
+                   for (i in 1:3) {
+                     x <-
+                       dplyr::tibble(
+                         Notional = r$port$Notional[i],
+                         Maturity = r$port$Maturity[i],
+                         Coupon = r$port$Coupon[i],
+                         YTM = r$port$YTM[i],
+                         Shock = r$port$Shock[i],
+                         Yield = round(seq(-0.03, 0.03, r$stepSize), 4), # ytm shock from current level
+                         Duration = 0,
+                         Price = 0,
+                         PriceMinus = 0,
+                         PricePlus = 0,
+                         Delta = 0,
+                         Gamma = 0,
+                         DeltaApprox = 0,
+                         ActualPL = 0,
+                         DeltaPL = 0,
+                         GammaPL = 0,
+                         DeltaGammaPL = 0,
+                         UnexplainedPL = 0
+                       )
+                     if (i == 1) {sens <- x} else {
+                       sens <- rbind(sens,x)
+                     }
+                   }
+                   
+                   #Rcpp::sourceCpp("./src/rcppPortParallel.cpp")
+                   r$sens <- rcppPortParallel(x = base::as.matrix(sens), stepSize = r$stepSize) %>% 
+                     dplyr::as_tibble() 
+                   
+                   local <- dplyr::filter(r$sens,Yield == 0)
+                   
+                   r$sens <- r$sens %>%
+                     dplyr::mutate(
+                       PriceLocal = dplyr::case_when(
+                         (Notional == r$port$Notional[1] & Maturity == r$port$Maturity[1]) ~ local$Price[1],
+                         (Notional == r$port$Notional[2] & Maturity == r$port$Maturity[2]) ~ local$Price[2],
+                         (Notional == r$port$Notional[3] & Maturity == r$port$Maturity[3]) ~ local$Price[3],
+                         TRUE ~ 0
+                       ),
+                       DeltaLocal = dplyr::case_when(
+                         (Notional == r$port$Notional[1] & Maturity == r$port$Maturity[1]) ~ local$Delta[1],
+                         (Notional == r$port$Notional[2] & Maturity == r$port$Maturity[2]) ~ local$Delta[2],
+                         (Notional == r$port$Notional[3] & Maturity == r$port$Maturity[3]) ~ local$Delta[3],
+                         TRUE ~ 0
+                       ),
+                       GammaLocal = dplyr::case_when(
+                         (Notional == r$port$Notional[1] & Maturity == r$port$Maturity[1]) ~ local$Gamma[1],
+                         (Notional == r$port$Notional[2] & Maturity == r$port$Maturity[2]) ~ local$Gamma[2],
+                         (Notional == r$port$Notional[3] & Maturity == r$port$Maturity[3]) ~ local$Gamma[3],
+                         TRUE ~ 0
+                       ),
+                       DeltaApprox = PriceLocal + DeltaLocal * (Yield / r$stepSize),
+                       ActualPL = Price - PriceLocal,
+                       DeltaPL = DeltaLocal * (Yield / r$stepSize),
+                       GammaPL = GammaLocal * (Yield)^2,
+                       DeltaGammaPL = DeltaPL + GammaPL,
+                       UnexplainedPL = Price - (PriceLocal + DeltaPL + GammaPL)
+                     )
+                  }
                  )
                })
   
