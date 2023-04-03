@@ -16,12 +16,12 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 attachment::att_from_rscripts()
+usethis::use_pipe()
 usethis::use_package("thinkr")
 usethis::use_package("dplyr")
 usethis::use_package("purrr")
 usethis::use_package("tidyr")
 usethis::use_package("plotly")
-usethis::use_pipe()
 usethis::use_package("RTL")
 usethis::use_package("DT")
 usethis::use_package("bslib")
@@ -30,7 +30,9 @@ usethis::use_package("purrr")
 usethis::use_package("scales")
 usethis::use_package("tidyquant")
 usethis::use_package("Rcpp")
+usethis::use_package("lifecycle")
 usethis::use_rcpp()
+spelling::update_wordlist()
 
 
 ## Add modules ----

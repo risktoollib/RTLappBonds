@@ -28,7 +28,7 @@ mod_nonparallel_server <- function(id, r){
     
     output$nonParallel <- shiny::renderDataTable({
       s = 0 # initial ytm
-      browser()
+      #browser()
       plAttrib <- function(x = r$port, pos = 1) {
         s = 0 # initial ytm
         StepSize = 0.0001

@@ -1,29 +1,25 @@
 Package: RTLappBonds
 Title: Bond risk at portfolio level
 Version: 0.0.1
-Date: "2022-03-25"
+Date: "2023-04-03"
 Authors@R: 
     person('Philippe', 'Cote', email = 'pcote@ualberta.ca', role = c('cre', 'aut'))
 Description: Develop your understanding of fixed income risk
     through active experimentation.
 License: MIT + file LICENSE
 Imports: 
-    attempt,
     bslib,
     config (>= 0.3.1),
     dplyr,
     DT,
-    glue,
     golem (>= 0.3.1),
-    htmltools,
+    lifecycle,
     magrittr,
     plotly,
-    processx,
     purrr,
     Rcpp,
     RTL,
     scales,
-    shinipsum,
     shiny (>= 1.7.1),
     thinkr,
     tidyquant,

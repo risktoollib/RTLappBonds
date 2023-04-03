@@ -19,7 +19,8 @@ mod_instruments_ui <- function(id){
     shiny::textOutput(ns("portMTM")),
     tags$br(),
     DT::dataTableOutput(ns("port")),
-    tags$br()
+    tags$br(),
+    shiny::radioButtons(ns("stepSize"), "Step size in basis points:", choices = c("1", "5", "10", "25", "50"), selected = "1", inline = TRUE)
   )
     
 }
@@ -32,9 +33,12 @@ mod_instruments_server <- function(id, r) {
                function(input, output, session) {
                  
                  Notional <- Maturity <- Coupon <- YTM <- portMTM <- x <- cmt <- NULL
+                 
+                 r$stepSize <- shiny::reactive(as.numeric(input$stepSize) / 10000)
+                 
                  cmt <- tidyquant::tq_get(c("DGS2","DGS10","DGS30"), get = "economic.data") %>% 
                    dplyr::filter(date == dplyr::last(date))
-                 coupons <- round(cmt$price / 0.25) * .25 / 100
+                 coupons <- round(cmt$price / 0.05) * .05 / 100
                  
                  r$port <-  dplyr::tibble(
                    Notional = c(500000, 500000, -1e6),

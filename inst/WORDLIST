@@ -1,4 +1,10 @@
+CMD
+Codecov
 Lifecycle
-github
 golem
-https
+magrittr
+mtm
+portfolioMTM
+potfolio
+tibble
+ytm

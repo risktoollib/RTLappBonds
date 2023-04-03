@@ -19,7 +19,6 @@ mod_parallel_ui <- function(id) {
       tags$li("Do results confirm your thinking?")
     ),
     tags$br(),
-    shiny::radioButtons(ns("stepSize"), "Step size in basis points:", choices = c("1", "5", "10", "25", "50"), selected = "5", inline = TRUE),
     plotly::plotlyOutput(ns("chartParallel"), height = "600px"),
   )
 }
@@ -32,13 +31,12 @@ mod_parallel_server <- function(id, r){
     
     ns <- session$ns
     
-    port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- PriceLocal <- DeltaLocal <- GammaLocal <- NULL
+    port <- Yield <- PricePlus <- PriceMinus <- Price <- DeltaPL <- GammaPL <- x <- PriceLocal <- DeltaLocal <- GammaLocal <- ActualPL <- Notional <- UnexplainedPL <- NULL
     
     output$chartParallel <- plotly::renderPlotly({
-      pp <- r$port
       s = 0 # initial ytm
 
-      StepSize <- shiny::reactive(as.numeric(input$stepSize) / 10000)
+      StepSize <- r$stepSize
       
       # junk <-
       #   dplyr::tibble(
@@ -102,12 +100,12 @@ mod_parallel_server <- function(id, r){
       }
       
       #Rcpp::sourceCpp("./src/rcppPortParallel.cpp")
-      sens <- rcppPortParallel(x = base::as.matrix(sens), stepSize = StepSize()) %>% 
+      r$sens <- rcppPortParallel(x = base::as.matrix(sens), stepSize = StepSize()) %>% 
         dplyr::as_tibble() 
       
-      local <- dplyr::filter(sens,Yield == 0)
+      local <- dplyr::filter(r$sens,Yield == 0)
     
-      sens <- sens %>%
+      r$sens %>%
         dplyr::mutate(
           PriceLocal = dplyr::case_when(
             (Notional == r$port$Notional[1] & Maturity == r$port$Maturity[1]) ~ local$Price[1],
@@ -133,9 +131,7 @@ mod_parallel_server <- function(id, r){
           GammaPL = GammaLocal * (Yield)^2,
           DeltaGammaPL = DeltaPL + GammaPL,
           UnexplainedPL = Price - (PriceLocal + DeltaPL + GammaPL)
-        )
-      
-      sens %>% 
+        ) %>% 
         dplyr::group_by(Yield) %>% 
         dplyr::summarise(Yield = max(Yield),
                          ActualPL = sum(ActualPL * Notional/100),
